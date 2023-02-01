@@ -1,4 +1,4 @@
-import { UserModel } from '../../modules/user/user.model';
+import { UserModel } from '../../models/User';
 import { HTTPError } from '../errors/HTTPErrors.errors';
 import { createToken } from '../token';
 

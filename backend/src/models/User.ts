@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import { hashPassword } from '../../services/auth/hashPassword.service';
+import { services } from '../services/auth';
 
 const UserSchema = new Schema({
   firstName: {
@@ -23,7 +23,7 @@ const UserSchema = new Schema({
 UserSchema.pre('save', function (next) {
   const password = this.password;
   if (password) {
-    this.password = hashPassword(password);
+    this.password = services.hashPassword(password);
     next();
   }
 });

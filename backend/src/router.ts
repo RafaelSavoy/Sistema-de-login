@@ -4,7 +4,7 @@ import { tokenRouter } from './modules/token/token.routes';
 
 const router = Router();
 
-router.use('/users', userRouter);
+router.use('/user', userRouter);
 
 router.use('/token',tokenRouter)
 

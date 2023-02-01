@@ -5,9 +5,9 @@ export async function signup(req: Request, res: Response) {
   try {
     const response = await services.signup(req);
     res.status(200).json(response);
-  } catch (err) {
+  } catch (e: any) {
     res
-      .status(err.code || 500)
-      .json({ message: err.message || 'Erro desconhecido' });
+      .status(e.code || 500)
+      .json({ message: e.message || 'Erro desconhecido' });
   }
 }
