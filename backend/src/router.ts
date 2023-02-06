@@ -6,6 +6,6 @@ const router = Router();
 
 router.use('/user', userRouter);
 
-router.use('/token',tokenRouter)
+router.use('/token', tokenRouter);
 
 export { router };

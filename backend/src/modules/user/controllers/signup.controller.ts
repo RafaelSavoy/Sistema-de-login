@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { services } from '../../../services/auth';
+import { authServices } from '../../../services/auth';
 
 export async function signup(req: Request, res: Response) {
   try {
-    const response = await services.signup(req);
+    const response = await authServices.signup(req.body);
     res.status(200).json(response);
   } catch (e: any) {
     res

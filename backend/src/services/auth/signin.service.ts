@@ -1,24 +1,27 @@
-import { Request } from 'express';
-import { createUser, getUser } from '../database';
-import { HTTPError } from '../errors/HTTPErrors.errors';
-import { createToken } from '../token';
-import { comparePassword } from './comparePassword.service';
+import { databaseServices } from '../database/user';
+import { HTTPError } from '../errors/HTTPError.errors';
 
-export async function signin(req: Request) {
-  const { email, password } = req.body;
-  const user = await getUser(email);
+import { createToken } from '../token';
+import { comparePassword } from '../password/comparePassword.service';
+
+export async function signin({
+  email,
+  password
+}: SigninRequest): Promise<SigninResponse> {
+  const user = await databaseServices.getUser(email);
+  if (!user) {
+    throw new HTTPError('Email ou senha inválidos', 401);
+  }
   const result = await comparePassword(password, user?.password as string);
-  if (!user || !result) {
-    console.log(result)
+  if (!result) {
     throw new HTTPError('Email ou senha inválidos', 401);
   }
   const userData = {
     _id: user?._id.toString(),
     firstName: user?.firstName,
-    lastName: user?.lastName,
+    lastName: user?.lastName
   };
   return {
-    userData,
-    token: createToken(userData),
+    token: createToken(userData)
   };
 }

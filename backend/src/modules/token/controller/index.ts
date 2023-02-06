@@ -1,1 +1,1 @@
-export * from './validateTokenMiddleware.controller'
+export * from './validateTokenMiddleware.controller';

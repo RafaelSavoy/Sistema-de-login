@@ -15,16 +15,16 @@ export async function signupValidator(
     firstName: joi.string().required().min(2).messages({
       'firstName.base': 'O primeiro nome precisa ser uma string',
       'firstName.required': 'O primeiro nome é obrigatório',
-      'firstName.min': 'O primeiro nome precisa ter pelo menos 2 caracteres',
+      'firstName.min': 'O primeiro nome precisa ter pelo menos 2 caracteres'
     }),
     lastName: joi.string().required().min(2).messages({
       'lastName.base': 'O último nome precisa ser uma string',
       'lastName.required': 'O último nome é obrigatório',
-      'lastName.min': 'O último nome precisa ter pelo menos 2 caracteres',
+      'lastName.min': 'O último nome precisa ter pelo menos 2 caracteres'
     }),
     email: joi.string().email({
       minDomainSegments: 2,
-      tlds: { allow: ['com', 'net'] },
+      tlds: { allow: ['com', 'net'] }
     }),
     password: joi
       .string()
@@ -34,8 +34,8 @@ export async function signupValidator(
       .messages({
         'password.base.pattern':
           'A senha não contém os parametros necessários (letras maiusculas, simbolos e mínimo de 8 a 16 caracteres',
-        'password.required': 'A senha é obrigatória',
-      }),
+        'password.required': 'A senha é obrigatória'
+      })
   });
 
   if (!req.body) return res.status(400).json({ message: 'Body necessário' });
@@ -44,7 +44,7 @@ export async function signupValidator(
   if (error) {
     return res.status(400).json({
       name: error.name,
-      message: error.message,
+      message: error.message
     });
   }
   req.body.email = req.body.email.toLowerCase();

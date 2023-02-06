@@ -11,16 +11,13 @@ export async function signinValidator(
       .string()
       .email({
         minDomainSegments: 2,
-        tlds: { allow: ['com', 'net'] },
+        tlds: { allow: ['com', 'net'] }
       })
       .required()
       .messages({ 'email.required': 'O email precisa ser preenchido' }),
-    password: joi
-      .string()
-      .required()
-      .messages({
-        'password.required': 'A senha precisa ser preenchida',
-      }),
+    password: joi.string().required().messages({
+      'password.required': 'A senha precisa ser preenchida'
+    })
   });
 
   if (!req.body) return res.status(400).json({ message: 'Body necessário' });
@@ -30,7 +27,7 @@ export async function signinValidator(
   if (error) {
     return res.status(400).json({
       name: error.name,
-      message: error.message,
+      message: error.message
     });
   }
   req.body.email = req.body.email.toLowerCase();

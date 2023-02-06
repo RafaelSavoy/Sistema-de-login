@@ -1,10 +1,9 @@
 import { Request, Response } from 'express';
-import { services } from '../../../services/auth';
-import { HTTPError } from '../../../services/errors/HTTPErrors.errors';
+import { authServices } from '../../../services/auth';
 
 export async function signin(req: Request, res: Response) {
   try {
-    const response = await services.signin(req);
+    const response = await authServices.signin(req.body);
     return res.status(200).json(response);
   } catch (e: any) {
     return res
