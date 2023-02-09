@@ -6,7 +6,5 @@ export class HTTPError extends Error {
     super();
     this.code = code;
     this.message = message;
-
-    console.log(message);
   }
 }

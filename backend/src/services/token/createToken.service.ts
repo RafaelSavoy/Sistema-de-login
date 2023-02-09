@@ -7,7 +7,7 @@ interface User {
   lastName: string | undefined;
 }
 
-export function createToken({ lastName, firstName, _id }: User) {
+export function createToken({ lastName, firstName, _id }: User): string {
   const token = jwt.sign({ _id, firstName, lastName }, SECRET, {
     expiresIn: '1 day'
   });

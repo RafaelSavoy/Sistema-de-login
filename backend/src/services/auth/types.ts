@@ -10,6 +10,11 @@ interface SignupRequest {
 }
 interface SigninResponse {
   token: string;
+  userData: {
+    _id: string | undefined;
+    firstName: string | undefined;
+    lastName: string | undefined;
+  };
 }
 interface SignupResponse {
   token: string;

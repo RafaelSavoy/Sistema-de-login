@@ -17,6 +17,7 @@ type UserContextType = {
   ) => void;
   resetUser: () => void;
   getUserToken: () => string | undefined;
+  setUserToken: (token: string) => void;
 };
 
 type UserProviderType = {

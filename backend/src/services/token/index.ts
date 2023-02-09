@@ -1,2 +1,7 @@
-export * from './createToken.service';
-export * from './validateToken.service';
+import { createToken } from "./createToken.service";
+import { validateToken } from "./validateToken.service";
+
+export const tokenServices = {
+    createToken,
+    validateToken
+}

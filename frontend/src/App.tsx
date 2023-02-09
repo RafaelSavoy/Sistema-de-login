@@ -22,17 +22,18 @@ function App() {
       }
       const { firstName, lastName, _id } = res?.data;
       updateUser(firstName, lastName, _id, true, token ? token : '');
+      navigate('/');
     });
   }, []);
 
   return (
     <Routes>
       <Route element={<PrivateRoute />}>
-        <Route path='/' element={<Home />} />
+        <Route path="/" element={<Home />} />
       </Route>
-      <Route path='/login' element={<Login />} />
-      <Route path='/register' element={<Register />} />
-      <Route path='*' element={<NotFoundPage />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }

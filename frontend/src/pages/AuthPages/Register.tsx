@@ -44,6 +44,7 @@ export function Register() {
     setLoading(true);
     const { firstName, lastName, email, password, confirmPassword } = form;
     if (password !== confirmPassword) {
+      setLoading(false);
       return setFormError('As senhas não conferem!', true);
     }
     try {

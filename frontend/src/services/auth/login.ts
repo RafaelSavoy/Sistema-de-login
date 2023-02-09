@@ -1,3 +1,4 @@
+import { userPrefix } from '../../utils/server';
 import api from '../api/api';
 
 export async function login(
@@ -9,7 +10,7 @@ export async function login(
   }
 ): Promise<void | unknown> {
   try {
-    const response = await api.post('/users/signin', {
+    const response = await api.post(`/${userPrefix}/signin`, {
       email,
       password,
     });

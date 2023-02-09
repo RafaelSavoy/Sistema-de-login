@@ -27,10 +27,10 @@ const UserSchema = new Schema({
   }
 });
 
-UserSchema.pre('save', function (next) {
+UserSchema.pre('save', async function (next) {
   const password = this.password;
   if (password) {
-    this.password = passwordServices.hashPassword(password);
+    this.password = await passwordServices.hashPassword(password);
     next();
   }
 });

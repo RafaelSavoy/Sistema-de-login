@@ -1,28 +1,18 @@
-import jwt, { JwtHeader, JwtPayload } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { SECRET } from '../../util/server.utils';
-
-interface TokenPayload {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  iat: number;
-  exp: number;
-}
-
-export function validateToken(token: string): Promise<TokenPayload> {
-  return new Promise((resolve, reject) => {
-    jwt.verify(token, SECRET, (err, decoded) => {
-      const payload = decoded as TokenPayload;
-      if (err) {
-        reject(err);
-      } else {
-        const currentTime = Math.floor(Date.now() / 1000);
-        if (payload.exp < currentTime) {
-          reject(new Error('Token expirado'));
-        } else {
-          resolve(payload);
-        }
-      }
-    });
-  });
+import { HTTPError } from '../errors/HTTPError.errors';
+export async function validateToken(token: string | undefined) {
+  if (!token) {
+    throw new HTTPError('Token necessario', 400);
+  }
+  try {
+    const decoded = jwt.verify(token, SECRET);
+    return decoded;
+  } catch (err) {
+    if (err instanceof jwt.TokenExpiredError) {
+      throw new HTTPError('Token expirado', 401);
+    } else if (err instanceof jwt.JsonWebTokenError) {
+      throw new HTTPError('Token inválido', 401);
+    }
+  }
 }

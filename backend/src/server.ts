@@ -8,8 +8,8 @@ mongoose.connect(URI, (error) => {
   if (error) {
     return console.log(error);
   }
-  console.log('Banco de dados conectado');
+  console.log('Database connected');
   app.listen(4000, () => {
-    console.log('Servidor conectado na porta: 4000');
+    console.log('Server connect on port: 4000');
   });
 });

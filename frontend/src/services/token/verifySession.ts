@@ -1,6 +1,4 @@
 import { AxiosResponse } from 'axios';
-import { NavigateFunction } from 'react-router-dom';
-import api from '../api/api';
 import { verifyToken } from './verifyToken';
 
 interface User {

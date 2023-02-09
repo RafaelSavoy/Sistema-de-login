@@ -1,8 +1,8 @@
 import { databaseServices } from '../database/user';
 import { HTTPError } from '../errors/HTTPError.errors';
 
-import { createToken } from '../token';
 import { comparePassword } from '../password/comparePassword.service';
+import { tokenServices } from '../token';
 
 export async function signin({
   email,
@@ -16,12 +16,14 @@ export async function signin({
   if (!result) {
     throw new HTTPError('Email ou senha inválidos', 401);
   }
+  const { firstName, lastName, _id } = user;
   const userData = {
-    _id: user?._id.toString(),
-    firstName: user?.firstName,
-    lastName: user?.lastName
+    _id: _id.toString(),
+    firstName,
+    lastName
   };
   return {
-    token: createToken(userData)
+    token: tokenServices.createToken(userData),
+    userData
   };
 }

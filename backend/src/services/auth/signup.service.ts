@@ -1,6 +1,6 @@
 import { databaseServices } from '../database/user';
 import { HTTPError } from '../errors/HTTPError.errors';
-import { createToken } from '../token';
+import { tokenServices } from '../token';
 
 export async function signup(req: SignupRequest) {
   const { email } = req;
@@ -10,13 +10,16 @@ export async function signup(req: SignupRequest) {
   try {
     const response = await databaseServices.createUser(req);
     const { firstName, lastName, _id } = response;
-    const token = createToken({
+    const userData = {
+      _id: _id.toString(),
       firstName,
-      lastName,
-      _id: _id.toString()
-    });
-    return { token };
-  } catch (e) {
-    throw new HTTPError('Erro ao salvar usuário no sistema', 500);
+      lastName
+    };
+    return {
+      token: tokenServices.createToken(userData),
+      userData
+    };
+  } catch (e: any) {
+    throw new Error(e);
   }
 }
