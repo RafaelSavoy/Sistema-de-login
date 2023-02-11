@@ -15,11 +15,9 @@ const Home = () => {
     navigate('/');
   }
   return (
-    <div>
-      <h1 id='text'>Parabéns,{user.firstName}, você está logado!</h1>
-      <h2>Agora está autorizado a me seguir </h2>
-      <button onClick={handleLogout}>Deslogar</button>
-    </div>
+    <main className='h-screen bg-zinc-900'>
+
+    </main>
   );
 };
 

@@ -1,13 +1,15 @@
 import React, { createContext, useContext, useState } from 'react';
 import { useCookies } from 'react-cookie';
 
+export interface User {
+  firstName: string;
+  lastName: string;
+  id: string;
+  logged: boolean;
+}
+
 type UserContextType = {
-  user: {
-    firstName: string;
-    lastName: string;
-    id: string;
-    logged: boolean;
-  };
+  user: User;
   updateUser: (
     firstName: string,
     lastName: string,
@@ -28,7 +30,7 @@ const defaultValues = {
   firstName: '',
   lastName: '',
   id: '',
-  logged: false,
+  logged: false
 };
 
 export const UserContext = createContext({} as UserContextType);

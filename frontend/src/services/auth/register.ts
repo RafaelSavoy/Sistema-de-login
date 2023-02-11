@@ -1,5 +1,5 @@
-import { userPrefix } from "../../utils/server";
-import api from "../api/api";
+import { userPrefix } from '../../utils/server';
+import api from '../api/api';
 
 export async function register(
   firstName: string,
@@ -11,6 +11,6 @@ export async function register(
     firstName,
     lastName,
     email,
-    password,
+    password
   });
 }

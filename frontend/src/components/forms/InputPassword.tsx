@@ -1,4 +1,6 @@
 import React, { useRef, useState } from 'react';
+import { FieldError } from 'react-hook-form';
+
 import EyeIcon from './EyeIcon';
 
 interface InputType {
@@ -6,7 +8,8 @@ interface InputType {
   name: string;
   placeholder: string;
   id?: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  register: any;
+  errors: FieldError | undefined;
 }
 
 const InputPassword = ({
@@ -14,7 +17,8 @@ const InputPassword = ({
   name,
   id,
   placeholder,
-  onChange,
+  register,
+  errors
 }: InputType) => {
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const inputBox = useRef() as React.MutableRefObject<HTMLInputElement>;
@@ -32,37 +36,46 @@ const InputPassword = ({
   }
 
   return (
-    <div className='flex items-center border-b-2' ref={inputBox}>
-      <input
-        type={
-          type !== 'password' ? type : passwordVisibility ? 'text' : 'password'
-        }
-        name={name}
-        placeholder={placeholder}
-        id={id || undefined}
-        onChange={onChange}
-        required
-        onFocus={() => toggleInputBorder(true)}
-        onBlur={() => toggleInputBorder(false)}
-        className='form-control block
+    <>
+      <div className="flex items-center border-b-2" ref={inputBox}>
+        <input
+          type={
+            type !== 'password'
+              ? type
+              : passwordVisibility
+              ? 'text'
+              : 'password'
+          }
+          placeholder={placeholder}
+          id={id || undefined}
+          {...register(name)}
+          required
+          onFocus={() => toggleInputBorder(true)}
+          onBlur={() => toggleInputBorder(false)}
+          className="form-control block
         w-full
         px-3
         py-1.5
         text-base
         font-normal
-        text-white
         bg-transparent
+        text-white
         border-none
         transition
         ease-in-out
         m-0
-        focus:text-white focus:outline-none
+        outline-none
+        focus:text-white
         placeholder:text-white
         col-span-11
-        '
-      />
-      <EyeIcon onClick={togglePasswordVisibility} />
-    </div>
+        "
+        />
+        <EyeIcon onClick={togglePasswordVisibility} />
+      </div>
+      <div>
+        <p className="text-red-400 text-right">{errors?.message}</p>
+      </div>
+    </>
   );
 };
 

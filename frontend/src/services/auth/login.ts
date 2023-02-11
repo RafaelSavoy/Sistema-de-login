@@ -12,7 +12,7 @@ export async function login(
   try {
     const response = await api.post(`/${userPrefix}/signin`, {
       email,
-      password,
+      password
     });
     return response;
   } catch (e) {

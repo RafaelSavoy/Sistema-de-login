@@ -1,99 +1,63 @@
-import React, { useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
-import ErrorComponent from '../../ErrorComponent';
-import EyeIcon from '../EyeIcon';
+import { yupResolver } from '@hookform/resolvers/yup';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { UserLoginProps } from '../../../pages/AuthPages/Login';
+import { loginSchema } from '../../../pages/AuthPages/validationSchemas';
+import FormLink from '../FormLink';
 import Input from '../Input';
 import InputPassword from '../InputPassword';
-import InputIcon from '../InputPassword';
 import SubmitButton from '../SubmitButton';
 
-interface FormState {
-  email: string;
-  password: string;
-  error: boolean;
-  errorMessage: string;
-}
-
 interface FormProps {
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  setForm: React.Dispatch<React.SetStateAction<FormState>>;
-  formState: FormState;
+  onSubmit: (data: UserLoginProps) => void;
   loading: boolean;
 }
 
-export function LoginForm({
-  onSubmit,
-  setForm,
-  formState,
-  loading,
-}: FormProps) {
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const name = e.target.name;
-    const value = e.target.value;
-    setForm({ ...formState, [name]: value });
-  }
+const defaultValues: UserLoginProps = {
+  email: '',
+  password: ''
+};
 
+export function LoginForm({ onSubmit, loading }: FormProps) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(loginSchema),
+    defaultValues: defaultValues
+  });
   return (
     <form
-      onSubmit={onSubmit}
-      autoComplete='off'
-      className='flex flex-col gap-6'
+      onSubmit={handleSubmit(onSubmit)}
+      autoComplete="off"
+      className="flex flex-col gap-6"
     >
-      <h1 className='text-titleColor text-center text-4xl font-poppins'>
+      <h1 className="text-titleColor text-center text-4xl font-poppins">
         Entrar
       </h1>
-      <div className='form-group'>
+      <div className="form-group">
         <Input
-          name='email'
-          type='email'
-          placeholder='Email'
-          onChange={handleChange}
+          name="email"
+          type="email"
+          placeholder="Email"
+          register={register}
+          errors={errors.email}
         />
       </div>
-      <div className='form-group mt-5'>
+      <div className="form-group mt-5">
         <InputPassword
-          name='password'
-          type='password'
-          onChange={handleChange}
-          placeholder='Senha'
+          name="password"
+          type="password"
+          placeholder="Senha"
+          register={register}
+          errors={errors.password}
         />
       </div>
-      {formState.error ? (
-        <ErrorComponent message={formState.errorMessage}/>
-      ) : (
-        ''
-      )}
-      <div className='flex justify-between items-center mt-5'>
-        <div className='form-group form-check flex items-center gap-2'>
-          <input
-            type='checkbox'
-            className='form-check-input appearance-none h-4 w-4 border border-titleColor rounded-sm bg-transparent checked:bg-titleColor checked:border-titleColor focus:outline-none transition duration-200 align-top bg-no-repeat bg-center bg-contain float-left cursor-pointer'
-            id='exampleCheck2'
-          />
-          <label
-            className='form-check-label inline-block text-formlabel'
-            htmlFor='exampleCheck2'
-          >
-            Lembrar de mim
-          </label>
-        </div>
-        <a
-          href='#!'
-          className='text-titleColor hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out'
-        >
-          Esqueceu a senha?
-        </a>
+      <div className="flex justify-between items-center mt-5">
+        <FormLink to="/recover" text="Esqueceu a senha?" />
       </div>
-      <SubmitButton value='Login' loading={loading}/>
-      <p className='text-formlabel text-center'>
-        Não é um membro?{' '}
-        <Link
-          to={'/register'}
-          className='text-titleColor hover:text-blue-700700 transition duration-200 ease-in-out'
-        >
-          Registrar
-        </Link>
-      </p>
+      <SubmitButton value="Login" loading={loading} />
     </form>
   );
 }

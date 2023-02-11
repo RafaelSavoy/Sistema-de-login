@@ -11,7 +11,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <BrowserRouter>
       <CookiesProvider>
         <UserProvider>
-          <App />
+          <App/>
         </UserProvider>
       </CookiesProvider>
     </BrowserRouter>

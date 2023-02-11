@@ -1,23 +1,23 @@
 import React from 'react';
+import { FieldError } from 'react-hook-form';
 
 interface InputType {
   type: string;
   name: string;
   placeholder: string;
   id?: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  register: any;
+  errors: FieldError | undefined;
 }
 
-const Input = ({ type, name, id, placeholder, onChange }: InputType) => {
+const Input = ({ type, name, id, placeholder, register }: InputType) => {
   return (
     <input
       type={type}
-      name={name}
       placeholder={placeholder}
       id={id || undefined}
-      onChange={onChange}
-      required
-      className='
+      {...register(name)}
+      className="
         form-control block
         w-full
         px-3
@@ -31,7 +31,8 @@ const Input = ({ type, name, id, placeholder, onChange }: InputType) => {
         transition
         ease-in-out
         m-0
-      focus:border-titleColor focus:outline-none'
+        outline-none
+      focus:border-titleColor"
     />
   );
 };
