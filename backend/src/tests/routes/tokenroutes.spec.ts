@@ -8,13 +8,12 @@ import jwt from 'jsonwebtoken';
 describe('Token route', () => {
   const testDatabase = new TestDatabase();
   const fakeUser = testDatabase.getTestUser();
-  const { lastName, firstName } = fakeUser;
+  const { userName } = fakeUser;
   const token = tokenServices.createToken({
-    firstName,
-    lastName,
+    userName,
     _id: '123123123'
   });
-  const expiredToken = jwt.sign({ _id: '13123123123', firstName, lastName }, SECRET, {
+  const expiredToken = jwt.sign({ _id: '13123123123', userName }, SECRET, {
     expiresIn: '0s'
   });
   beforeAll(() => {
@@ -33,8 +32,7 @@ describe('Token route', () => {
       .set('authorization', `Bearer ${token}`);
     const payload = response.body;
     expect(payload).toHaveProperty('_id');
-    expect(payload).toHaveProperty('firstName');
-    expect(payload).toHaveProperty('lastName');
+    expect(payload).toHaveProperty('userName');
     expect(payload).toHaveProperty('iat');
     expect(payload).toHaveProperty('exp');
   });

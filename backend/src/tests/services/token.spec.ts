@@ -4,12 +4,11 @@ import { TestDatabase } from '../../util/testdatabase.util';
 
 describe('testing token service', () => {
   const user = new TestDatabase().getTestUser();
-  const { lastName, firstName } = user;
+  const { userName } = user;
   let token: string;
   it('should be create a token', () => {
     const createdToken = tokenServices.createToken({
-      lastName,
-      firstName,
+      userName,
       _id: '123123123123'
     });
     expect(typeof createdToken).toBe('string');
@@ -18,8 +17,7 @@ describe('testing token service', () => {
   it('should be possible validate token', async () => {
     const payload = await validateToken(token);
     expect(payload).toHaveProperty('_id')
-    expect(payload).toHaveProperty('firstName')
-    expect(payload).toHaveProperty('lastName')
+    expect(payload).toHaveProperty('userName')
     expect(payload).toHaveProperty('iat')
     expect(payload).toHaveProperty('exp')
   });

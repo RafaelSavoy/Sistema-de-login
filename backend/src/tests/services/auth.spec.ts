@@ -22,7 +22,7 @@ describe('Testing auth services', () => {
     expect(response).toHaveProperty('token');
     expect(response).toHaveProperty('userData');
   });
-  it('should not be possible to signup a existent user', async () => {
+  it('should not be possible to signup a existent user', () => {
     expect(async () => await authServices.signup(fakeUser)).rejects.toThrow(
       HTTPError
     );

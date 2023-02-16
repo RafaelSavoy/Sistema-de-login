@@ -11,7 +11,6 @@ describe('Testing database functions', () => {
   afterAll(async () => {
     await testDatabase.closeDatabase();
   });
-  let id: string | undefined;
   it('should be possible to create a user', async () => {
     const response = await databaseServices.createUser(fakeUser);
     expect(response?._id).toBeTruthy();
@@ -19,10 +18,10 @@ describe('Testing database functions', () => {
   it('should be possible to get a user', async () => {
     const response = await databaseServices.getUser(email);
     expect(response?._id).toBeTruthy();
-    id = response?._id.toString();
+    testDatabase.setUserId(response?._id.toString());
   });
   it('should be possible to delete a user', async () => {
-    await databaseServices.deleteUser(id!);
+    await databaseServices.deleteUser(fakeUser._id!);
     const response = await databaseServices.getUser(email);
     expect(response).toBeFalsy();
   });

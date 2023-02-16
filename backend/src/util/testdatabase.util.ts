@@ -3,9 +3,8 @@ import { UserModel } from '../models/User';
 import { TESTURI } from './server.utils';
 
 interface TestUser {
-  id?: string;
-  firstName: string;
-  lastName: string;
+  _id?: string;
+  userName: string;
   email: string;
   password: string;
 }
@@ -15,14 +14,16 @@ export class TestDatabase {
   testDbConnection: mongoose.Connection | undefined;
   constructor() {
     this.testUser = {
-      firstName: 'Teste',
-      lastName: 'Teste',
+      userName: 'RafaelSavoy',
       email: 'teste@gmail.com',
       password: 'Teste123@'
     };
   }
   getTestUser(): TestUser {
     return this.testUser;
+  }
+  setUserId(id: string | undefined): void {
+    this.testUser._id = id;
   }
   async connectTestDatabase() {
     try {

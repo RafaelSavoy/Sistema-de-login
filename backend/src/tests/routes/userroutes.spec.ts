@@ -37,21 +37,12 @@ describe('Signin route', () => {
       });
     expect(response.status).toBe(400);
   });
-  it('should not be possible to signup user without firstName', async () => {
+  it('should not be possible to signup user without userName', async () => {
     const response = await request(app)
       .post('/user/signup')
       .send({
         ...fakeUser,
-        firstName: null
-      });
-    expect(response.status).toBe(400);
-  });
-  it('should not be possible to signup user without lastName', async () => {
-    const response = await request(app)
-      .post('/user/signup')
-      .send({
-        ...fakeUser,
-        lastName: null
+        userName: null
       });
     expect(response.status).toBe(400);
   });
@@ -79,8 +70,7 @@ describe('Signin route', () => {
     expect(response.status).toBe(200);
     expect(body).toHaveProperty('token');
     expect(body).toHaveProperty('userData');
-    expect(body.userData).toHaveProperty('firstName');
-    expect(body.userData).toHaveProperty('lastName');
+    expect(body.userData).toHaveProperty('userName');
     expect(body.userData).toHaveProperty('_id');
   });
   it('should not be possible signup a existent user', async () => {
@@ -96,8 +86,7 @@ describe('Signin route', () => {
     expect(response.status).toBe(200);
     expect(body).toHaveProperty('token');
     expect(body).toHaveProperty('userData');
-    expect(body.userData).toHaveProperty('firstName');
-    expect(body.userData).toHaveProperty('lastName');
+    expect(body.userData).toHaveProperty('userName');
     expect(body.userData).toHaveProperty('_id');
   });
   it('should not be possible to signin user with a wrong password', async () => {
