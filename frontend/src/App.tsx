@@ -16,12 +16,12 @@ function App() {
 
   useEffect(() => {
     const token = getUserToken();
-    verifySession(token, user, (err, res) => {
+    verifySession(user, token, (err, res) => {
       if (err) {
         return console.log(err);
       }
-      const { firstName, lastName, _id } = res?.data;
-      updateUser(firstName, lastName, _id, true, token ? token : '');
+      const { userName, _id } = res?.data;
+      updateUser({ userName, _id }, token!);
       navigate('/');
     });
   }, []);

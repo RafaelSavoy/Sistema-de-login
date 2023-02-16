@@ -14,9 +14,10 @@ module.exports = {
     },
     extend: {
       colors: {
-        loginbg: 'gray',
+        defaultBg: 'gray',
         formlabel: 'white',
         titleColor: '#00e5ff',
+        secondColor: '#00e5ff'
       },
       fontFamily: {
         openSans: ['"Open Sans"', ...defaultTheme.fontFamily.sans],

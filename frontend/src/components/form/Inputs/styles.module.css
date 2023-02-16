@@ -1,0 +1,21 @@
+.passwordInput {
+  @apply block w-full px-3 py-1.5 text-base font-normal bg-transparent text-white border-none transition ease-in-out outline-none focus:text-white placeholder:text-white col-span-11 focus:outline-none;
+}
+.input {
+  @apply block
+        w-full
+        px-3
+        py-1.5
+        text-base
+        font-normal
+        text-white
+        placeholder:text-white
+        bg-transparent
+        border-b-2
+        transition
+        ease-in-out
+        m-0
+        outline-none
+      focus:border-secondColor
+        focus:outline-none;
+}

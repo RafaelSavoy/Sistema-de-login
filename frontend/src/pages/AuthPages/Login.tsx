@@ -1,36 +1,70 @@
-import { AxiosError } from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
-import { useCookies } from 'react-cookie';
+import axios from 'axios';
+import { rule } from 'postcss';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LoginForm } from '../../components/forms';
+import { AnimatedSection, LoginForm } from '../../components';
 import { UserContext } from '../../contexts/User';
 import { login } from '../../services/auth';
+import { UserLoginRequest } from '../../services/auth/types';
+import Styles from './styles.module.css';
+
+const loginDefaultValues = {
+  email: '',
+  password: ''
+};
 
 export interface UserLoginProps {
   email: string;
   password: string;
 }
-
 export function Login() {
   const navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies(['token']);
+  const [loading, setLoading] = useState(false);
   const { user, updateUser } = useContext(UserContext);
-  const [loading, setLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (user.logged) {
-      navigate('/');
-    }
+  const [formError, setFormError] = useState<{
+    status: boolean;
+    message: string;
+  }>({
+    status: false,
+    message: ''
   });
-
-  function handleSubmit(data: UserLoginProps) {
-    console.log(data);
+  async function setError(message: string) {
+    setFormError({ status: true, message });
+  }
+  async function resetError() {
+    setFormError({ ...formError, status: false });
+  }
+  async function handleSubmit(data: UserLoginRequest) {
+    resetError();
+    setLoading(true);
+    setTimeout(async () => {
+      try {
+        const response = await login(data);
+        updateUser(response.userData, response.token);
+        navigate('/')
+      } catch (e: any) {
+        if (axios.isAxiosError(e)) {
+          const message = e.response?.data.message;
+          setError(message);
+        } else if (e.request) {
+          setError(
+            'Ocorreu um erro no sistema, entre em contato com o suporte.'
+          );
+        }
+      } finally {
+        setLoading(false);
+      }
+    }, 1000 * 2);
   }
   return (
-    <main className="flex justify-center items-center h-screen bg-zinc-900">
-      <section className="p-5 sm:w-full lg:w-3/5 m-5 max-w-7xl">
-        <LoginForm onSubmit={handleSubmit} loading={loading} />
-      </section>
+    <main className={Styles.main}>
+      <AnimatedSection className={Styles.section}>
+        <LoginForm
+          onSubmit={handleSubmit}
+          loading={loading}
+          error={formError}
+        />
+      </AnimatedSection>
     </main>
   );
 }

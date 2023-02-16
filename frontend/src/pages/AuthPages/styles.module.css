@@ -1,0 +1,6 @@
+.main{
+    @apply flex justify-center items-center h-screen
+}
+.section{
+    @apply p-5 sm:w-full lg:w-3/5 m-5 max-w-7xl
+}

@@ -8,7 +8,7 @@ interface ButtonProps {
 const SubmitButton = ({ value, loading }: ButtonProps) => {
   return (
     <button
-      type='submit'
+      type="submit"
       className={`w-full
       p-2
       bg-transparent
@@ -35,4 +35,4 @@ const SubmitButton = ({ value, loading }: ButtonProps) => {
   );
 };
 
-export default SubmitButton;
+export { SubmitButton };

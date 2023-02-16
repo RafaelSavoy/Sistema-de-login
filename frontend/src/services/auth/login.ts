@@ -1,21 +1,15 @@
 import { userPrefix } from '../../utils/server';
 import api from '../api/api';
+import { UserLoginRequest, UserLoginResponse } from './types';
 
-export async function login(
-  email: string,
-  password: string,
-  setFormError: {
-    (errorMessage?: string | undefined, status?: boolean | undefined): void;
-    (arg0: string, arg1: boolean): void;
-  }
-): Promise<void | unknown> {
-  try {
-    const response = await api.post(`/${userPrefix}/signin`, {
+export async function login({
+  email,
+  password
+}: UserLoginRequest): Promise<UserLoginResponse> {
+  return api
+    .post(`/${userPrefix}/signin`, {
       email,
       password
-    });
-    return response;
-  } catch (e) {
-    throw e;
-  }
+    })
+    .then((response) => response.data)
 }

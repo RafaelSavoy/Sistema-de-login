@@ -2,15 +2,14 @@ import { AxiosResponse } from 'axios';
 import { verifyToken } from './verifyToken';
 
 interface User {
-  firstName: string;
-  lastName: string;
-  id: string;
+  _id: string;
+  userName: string;
   logged: boolean;
 }
 
 export async function verifySession(
-  token: string | undefined,
   user: User,
+  token: string | undefined,
   callback: (err: Error | null, data: AxiosResponse<any, any> | null) => void
 ) {
   if (!user.logged) {

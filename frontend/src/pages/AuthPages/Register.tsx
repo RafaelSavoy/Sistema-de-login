@@ -1,31 +1,66 @@
-import React, { useContext } from 'react';
+import axios from 'axios';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RegisterForm } from '../../components/forms';
+import { AnimatedSection } from '../../components';
+import { RegisterForm } from '../../components/form';
 import { UserContext } from '../../contexts/User';
+import { register } from '../../services/auth';
+import Styles from './styles.module.css';
 
 export interface UserRegisterProps {
-  firstName: string;
-  lastName: string;
+  userName: string;
   email: string;
   password: string;
   confirmPassword: string;
 }
 
 export function Register() {
-  const { user, updateUser } = useContext(UserContext);
-  const [loading, setLoading] = React.useState(false);
-  function onSubmit(data: UserRegisterProps): void {
-    const userData = data;
-    Reflect.deleteProperty(userData, 'confirmPassword');
+  const { updateUser } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const [formError, setFormError] = useState<{
+    status: boolean;
+    message: string;
+  }>({
+    status: false,
+    message: ''
+  });
+  async function setError(message: string) {
+    setFormError({ status: true, message });
+  }
+  async function resetError() {
+    setFormError({ ...formError, status: false });
+  }
+
+  async function onSubmit(data: UserRegisterProps) {
+    resetError();
     setLoading(true);
-    console.log({ ...userData });
+    setTimeout(async () => {
+      try {
+        const response = await register(data);
+        console.log(response)
+        updateUser(response.userData, response.token);
+        navigate('/');
+      } catch (e: any) {
+        if (axios.isAxiosError(e)) {
+          const message = e.response?.data.message;
+          setError(message);
+        } else if (e.request) {
+          setError(
+            'Ocorreu um erro no sistema, entre em contato com o suporte.'
+          );
+        }
+      } finally {
+        setLoading(false);
+      }
+    }, 1000 * 2);
   }
 
   return (
-    <main className="flex justify-center items-center h-screen bg-zinc-900">
-      <section className="p-5 sm:w-full lg:w-3/5 m-5 max-w-7xl">
-        <RegisterForm onSubmit={onSubmit} loading={loading} />
-      </section>
+    <main className={Styles.main}>
+      <AnimatedSection className={Styles.section}>
+        <RegisterForm onSubmit={onSubmit} loading={loading} error={formError} />
+      </AnimatedSection>
     </main>
   );
 }
