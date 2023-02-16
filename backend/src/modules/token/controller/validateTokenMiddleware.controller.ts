@@ -9,6 +9,6 @@ export async function validateTokenMiddleware(req: Request, res: Response) {
   } catch (e: any) {
     return res
       .status(e.code || 500)
-      .json({ message: e.message || 'Erro desconhecido' });
+      .json({ message: e.message || 'Erro desconhecido, contato o administrador do sistema.' });
   }
 }

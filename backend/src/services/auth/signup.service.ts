@@ -9,11 +9,10 @@ export async function signup(req: SignupRequest) {
   }
   try {
     const response = await databaseServices.createUser(req);
-    const { firstName, lastName, _id } = response;
+    const { userName, _id } = response;
     const userData = {
       _id: _id.toString(),
-      firstName,
-      lastName
+      userName
     };
     return {
       token: tokenServices.createToken(userData),

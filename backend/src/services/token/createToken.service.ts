@@ -3,12 +3,11 @@ import { SECRET } from '../../util/server.utils';
 
 interface User {
   _id: string | undefined;
-  firstName: string | undefined;
-  lastName: string | undefined;
+  userName: string | undefined;
 }
 
-export function createToken({ lastName, firstName, _id }: User): string {
-  const token = jwt.sign({ _id, firstName, lastName }, SECRET, {
+export function createToken({ userName, _id }: User): string {
+  const token = jwt.sign({ userName, _id }, SECRET, {
     expiresIn: '1 day'
   });
   return token;

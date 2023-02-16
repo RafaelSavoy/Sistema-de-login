@@ -1,8 +1,7 @@
 import { UserModel } from '../../../models/User';
 
 interface User {
-  firstName: string;
-  lastName: string;
+  userName: string;
   email: string;
   password: string;
 }

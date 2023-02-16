@@ -16,11 +16,10 @@ export async function signin({
   if (!result) {
     throw new HTTPError('Email ou senha inválidos', 401);
   }
-  const { firstName, lastName, _id } = user;
+  const { userName, _id } = user;
   const userData = {
     _id: _id.toString(),
-    firstName,
-    lastName
+    userName,
   };
   return {
     token: tokenServices.createToken(userData),

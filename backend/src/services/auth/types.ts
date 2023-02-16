@@ -3,8 +3,7 @@ interface SigninRequest {
   password: string;
 }
 interface SignupRequest {
-  firstName: string;
-  lastName: string;
+  userName: string;
   email: string;
   password: string;
 }
@@ -12,10 +11,13 @@ interface SigninResponse {
   token: string;
   userData: {
     _id: string | undefined;
-    firstName: string | undefined;
-    lastName: string | undefined;
+    userName: string | undefined;
   };
 }
 interface SignupResponse {
   token: string;
+  userData: {
+    _id: string | undefined;
+    userName: string | undefined;
+  };
 }

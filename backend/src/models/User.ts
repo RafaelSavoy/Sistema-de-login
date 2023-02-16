@@ -2,20 +2,15 @@ import mongoose, { Schema } from 'mongoose';
 import { passwordServices } from '../services/password';
 
 export interface User {
-  firstName: string;
-  lastName: string;
+  userName: string;
   email: string;
   password: string;
 }
 
 const UserSchema = new Schema({
-  firstName: {
+  userName: {
     type: 'String',
-    required: 'Insira o primeiro nome do usuário'
-  },
-  lastName: {
-    type: 'String',
-    required: 'Insira o ultimo nome do usuário'
+    required: 'Insira um nome de usuário'
   },
   email: {
     type: 'String',

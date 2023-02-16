@@ -12,15 +12,10 @@ export async function signupValidator(
     'Password must be strong. At least one upper case alphabet. At least one lower case alphabet. At least one digit. At least one special character. Minimum eight in length'
   );
   const bodyValidator = joi.object({
-    firstName: joi.string().required().min(2).messages({
-      'firstName.base': 'O primeiro nome precisa ser uma string',
-      'firstName.required': 'O primeiro nome é obrigatório',
-      'firstName.min': 'O primeiro nome precisa ter pelo menos 2 caracteres'
-    }),
-    lastName: joi.string().required().min(2).messages({
-      'lastName.base': 'O último nome precisa ser uma string',
-      'lastName.required': 'O último nome é obrigatório',
-      'lastName.min': 'O último nome precisa ter pelo menos 2 caracteres'
+    userName: joi.string().required().min(2).messages({
+      'userName.base': 'O nome de usuário precisa ser uma string',
+      'userName.required': 'O nome de usuário é obrigatório',
+      'userName.min': 'O nome de usuário precisa ter pelo menos 2 caracteres'
     }),
     email: joi.string().email({
       minDomainSegments: 2,
